@@ -1,0 +1,26 @@
+version: "3.9"
+
+# ─── Local development services ───────────────────────────────────────────────
+# Start with:  docker compose up -d
+# Stop with:   docker compose down
+# Wipe data:   docker compose down -v
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: karma-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes --loglevel warning
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+    name: karma-redis-data
