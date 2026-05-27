@@ -1,0 +1,13 @@
+# Tells Railway/nixpacks this is a Node.js project
+# and where to find the actual source.
+
+providers = ["node"]
+
+[phases.install]
+cmds = ["cd agent && npm ci"]
+
+[phases.build]
+cmds = ["cd agent && npm run build"]
+
+[start]
+cmd = "node agent/dist/index.js"
