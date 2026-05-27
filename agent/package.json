@@ -1,0 +1,39 @@
+{
+  "name": "karma-protocol-agent",
+  "version": "1.0.0",
+  "description": "KARMA PROTOCOL autonomous scoring agent — listens to swap events, computes wallet reputation scores, and writes them to KarmaRegistry on-chain.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "dev:pretty": "ts-node src/index.ts | pino-pretty",
+    "typecheck": "tsc --noEmit",
+    "clean": "rimraf dist"
+  },
+  "keywords": [
+    "uniswap-v4",
+    "karma",
+    "reputation",
+    "agent",
+    "defi"
+  ],
+  "author": "Karma Protocol",
+  "license": "MIT",
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "nodemon": "^3.1.14",
+    "pino-pretty": "^13.0.0",
+    "rimraf": "^6.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "ethers": "^6.16.0",
+    "ioredis": "^5.11.0",
+    "pino": "^9.7.0",
+    "viem": "^2.51.2"
+  }
+}
