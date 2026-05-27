@@ -21,5 +21,8 @@ dist/
 .idea/
 *.swp
 
+# Claude Code local settings
+.claude/
+
 # Frontend — has its own git repo; managed separately
 frontend/
