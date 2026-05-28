@@ -130,7 +130,9 @@ export const config: Config = {
 
   agentPrivateKey:      req("AGENT_PRIVATE_KEY"),
 
-  redisUrl:             opt("REDIS_URL", "redis://localhost:6379"),
+  // Empty string → in-memory mode (no Redis required).
+  // Set REDIS_URL for a real Redis connection (Railway, Upstash, etc.).
+  redisUrl:             opt("REDIS_URL", ""),
 
   pollIntervalMs:       optInt("POLL_INTERVAL_MS", 60_000),
   startBlock:           BigInt(opt("START_BLOCK", "0")),

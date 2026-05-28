@@ -1,0 +1,22 @@
+services:
+  - type: worker
+    name: karma-agent
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    autoDeploy: false
+    envVars:
+      - key: RPC_URL_PRIMARY
+        value: https://testrpc.xlayer.tech
+      - key: CHAIN_ID
+        value: "1952"
+      - key: KARMA_HOOK_ADDRESS
+        value: "0x8520437A994BeC0C3b1fE3EbB3F52CF514698080"
+      - key: KARMA_REGISTRY_ADDRESS
+        value: "0x1D13fF25b10C9a6741DFdce229073bed652197c7"
+      - key: POLL_INTERVAL_MS
+        value: "60000"
+      - key: LOG_MODE
+        value: "json"
+      # AGENT_PRIVATE_KEY — set manually in the Render dashboard (never commit)
+      # REDIS_URL — leave unset to use the built-in in-memory store
