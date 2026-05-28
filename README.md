@@ -44,9 +44,9 @@ Karma Protocol introduces a **trustless, autonomous reputation layer** for Unisw
 
 | Contract       | Address                      | Explorer                                                                              |
 |----------------|------------------------------|---------------------------------------------------------------------------------------|
-| KarmaRegistry  | `$XLAYER_REGISTRY_ADDRESS`   | [OKLink ↗](https://www.oklink.com/xlayer-test/address/$XLAYER_REGISTRY_ADDRESS)       |
-| KarmaHook (V4) | `$XLAYER_HOOK_ADDRESS`       | [OKLink ↗](https://www.oklink.com/xlayer-test/address/$XLAYER_HOOK_ADDRESS)           |
-| Agent Wallet   | `$AGENT_WALLET`              | [OKLink ↗](https://www.oklink.com/xlayer-test/address/$AGENT_WALLET)                  |
+| KarmaRegistry  | `0x1D13fF25b10C9a6741DFdce229073bed652197c7`   | [OKLink ↗](https://www.oklink.com/xlayer-test/address/0x1D13fF25b10C9a6741DFdce229073bed652197c7)       |
+| KarmaHook (V4) | `0x8520437A994BeC0C3b1fE3EbB3F52CF514698080`       | [OKLink ↗](https://www.oklink.com/xlayer-test/address/0x8520437A994BeC0C3b1fE3EbB3F52CF514698080)           |
+| Agent Wallet   | `0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266`              | [OKLink ↗](https://www.oklink.com/xlayer-test/address/0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266)                  |
 
 > Variables prefixed with `$` must be replaced with real addresses after deployment.  
 > See [Deployment](#deployment) below.
@@ -294,7 +294,7 @@ Navigate to **Lookup** → enter any X Layer wallet address → the karma score 
 Open the agent wallet on OKLink:
 
 ```
-https://www.oklink.com/xlayer-test/address/$AGENT_WALLET
+https://www.oklink.com/xlayer-test/address/0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
 ```
 
 Refresh after 60 seconds. A new `batchSetKarma()` transaction will appear. Click it — the decoded calldata shows the exact wallets scored and their new values. Each transaction is one autonomous scoring cycle.
@@ -337,8 +337,8 @@ forge test -vv   # all tests must pass
 forge script script/DeployKarmaHook.s.sol \
   --rpc-url https://testrpc.xlayer.tech \
   --sig "run(address,address,address)" \
-  $POOL_MANAGER_ADDRESS \
-  $AGENT_WALLET \
+  0x0000000000000000000000000000000000000001 \
+  0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 \
   $OWNER_ADDRESS \
   --private-key $PRIVATE_KEY \
   --broadcast
@@ -352,8 +352,8 @@ Save output addresses to `contracts/deployments/1952.json`.
 # Set these in Railway dashboard under Variables:
 RPC_URL=https://testrpc.xlayer.tech
 CHAIN_ID=1952
-KARMA_REGISTRY_ADDRESS=$XLAYER_REGISTRY_ADDRESS
-KARMA_HOOK_ADDRESS=$XLAYER_HOOK_ADDRESS
+KARMA_REGISTRY_ADDRESS=0x1D13fF25b10C9a6741DFdce229073bed652197c7
+KARMA_HOOK_ADDRESS=0x8520437A994BeC0C3b1fE3EbB3F52CF514698080
 AGENT_PRIVATE_KEY=$AGENT_PRIVATE_KEY
 UPSTASH_REDIS_URL=$UPSTASH_REDIS_URL
 UPSTASH_REDIS_TOKEN=$UPSTASH_REDIS_TOKEN
@@ -366,8 +366,8 @@ Health endpoint: `https://$RAILWAY_URL/health`
 ```bash
 cd frontend
 # Update .env:
-# NEXT_PUBLIC_KARMA_REGISTRY_ADDRESS=$XLAYER_REGISTRY_ADDRESS
-# NEXT_PUBLIC_KARMA_HOOK_ADDRESS=$XLAYER_HOOK_ADDRESS
+# NEXT_PUBLIC_KARMA_REGISTRY_ADDRESS=0x1D13fF25b10C9a6741DFdce229073bed652197c7
+# NEXT_PUBLIC_KARMA_HOOK_ADDRESS=0x8520437A994BeC0C3b1fE3EbB3F52CF514698080
 # NEXT_PUBLIC_RPC_URL=https://testrpc.xlayer.tech
 # NEXT_PUBLIC_CHAIN_ID=1952
 
