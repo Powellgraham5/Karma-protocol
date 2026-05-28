@@ -1,0 +1,23 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "frontend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "frontend"],
+      "port": 3000
+    },
+    {
+      "name": "agent",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "agent"],
+      "port": 3001
+    },
+    {
+      "name": "redis",
+      "runtimeExecutable": "docker",
+      "runtimeArgs": ["compose", "-f", "agent/docker-compose.yml", "up"],
+      "port": 6379
+    }
+  ]
+}

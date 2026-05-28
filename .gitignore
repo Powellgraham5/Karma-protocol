@@ -21,8 +21,10 @@ dist/
 .idea/
 *.swp
 
-# Claude Code local settings
+# Claude Code local settings (secrets stay local; launch config is shared)
 .claude/
+!.claude/launch.json
+.CLAUDE.md
 
 # Frontend — has its own git repo; managed separately
 frontend/
