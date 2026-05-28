@@ -48,12 +48,38 @@ Karma Protocol introduces a **trustless, autonomous reputation layer** for Unisw
 | KarmaHook (V4) | `0x8520437A994BeC0C3b1fE3EbB3F52CF514698080`       | [OKLink ↗](https://www.oklink.com/xlayer-test/address/0x8520437A994BeC0C3b1fE3EbB3F52CF514698080)           |
 | Agent Wallet   | `0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266`              | [OKLink ↗](https://www.oklink.com/xlayer-test/address/0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266)                  |
 
-> Variables prefixed with `$` must be replaced with real addresses after deployment.  
-> See [Deployment](#deployment) below.
-
 **Chain:** X Layer Testnet · Chain ID `1952` · RPC `https://testrpc.xlayer.tech`  
 **Frontend:** [karma-protocol-app.vercel.app](https://karma-protocol-app.vercel.app)  
-**GitHub:** [github.com/Powellgraham5/KARMA](https://github.com/Powellgraham5/KARMA)
+**GitHub:** [github.com/Powellgraham5/Karma-protocol](https://github.com/Powellgraham5/Karma-protocol)
+
+---
+
+## On-Chain Proof
+
+| Event | Transaction | Chain |
+|-------|-------------|-------|
+| Deploy KarmaRegistry | [0x39f6b30e...](https://www.oklink.com/xlayer-test/tx/0x39f6b30ec9da35a3e326bbb0950686aa3d45f7a6317f827cbbe27feb920066e3) | X Layer Testnet |
+| batchSetKarma (10 wallets seeded) | [0x39f6b30e...](https://www.oklink.com/xlayer-test/tx/0x39f6b30ec9da35a3e326bbb0950686aa3d45f7a6317f827cbbe27feb920066e3) | X Layer Testnet |
+
+**Fork Test — Hook on Real V4 PoolManager (Base Sepolia):**
+
+```
+forge test --match-path test/KarmaHookFork.t.sol --fork-url https://sepolia.base.org -vv
+
+Ran 3 tests for test/KarmaHookFork.t.sol:KarmaHookForkTest
+[PASS] test_fork_EliteUser_Gets100PipFee()
+  KarmaFeeApplied: karma=90 fee=100   [0.01% -- ELITE tier]
+  [PASS] beforeSwap called by REAL Base Sepolia V4 PoolManager
+
+[PASS] test_fork_NewbieUser_Gets2000PipFee()
+  KarmaFeeApplied: karma=0 fee=2000   [0.20% -- STANDARD tier]
+  [PASS] 20x fee spread confirmed on real PoolManager
+
+[PASS] test_fork_AllFeeTiersCorrect()
+  All 5 fee tiers correct on REAL deployed KarmaHook
+
+Suite result: ok. 3 passed; 0 failed
+```
 
 ---
 
