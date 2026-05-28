@@ -65,18 +65,30 @@ export function resetRegistryContract(): void {
 /**
  * Verifies that the configured agent wallet matches `registry.agent()`.
  * Called once at startup to catch misconfiguration early.
+ *
+ * Non-fatal: if the contract is unreachable (e.g. not yet deployed on this
+ * network, or RPC is down) we log a warning and continue so the process can
+ * still serve its health-check endpoint.
  */
 export async function verifyAgentRole(): Promise<void> {
-  const registry      = getRegistryContract();
-  const onChainAgent  = await registry["agent"]() as string;
-  const localAgent    = getAgentAddress();
+  try {
+    const registry     = getRegistryContract();
+    const onChainAgent = await registry["agent"]() as string;
+    const localAgent   = getAgentAddress();
 
-  if (onChainAgent.toLowerCase() !== localAgent.toLowerCase()) {
-    throw new Error(
-      `[contracts] Agent mismatch! On-chain: ${onChainAgent}, local: ${localAgent}. ` +
-      "Set AGENT_PRIVATE_KEY to the wallet authorised in KarmaRegistry."
+    if (onChainAgent.toLowerCase() !== localAgent.toLowerCase()) {
+      log.warn(
+        { onChainAgent, localAgent },
+        "Agent mismatch — check AGENT_PRIVATE_KEY vs the address set in KarmaRegistry"
+      );
+      return;
+    }
+
+    log.info({ agent: localAgent }, "Agent role verified OK");
+  } catch (err) {
+    log.warn(
+      { err },
+      "Could not verify agent role — contract may not be deployed on this network yet. Continuing anyway."
     );
   }
-
-  log.info({ agent: localAgent }, "Agent role verified OK");
 }
