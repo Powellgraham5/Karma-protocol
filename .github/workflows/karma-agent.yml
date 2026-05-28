@@ -1,0 +1,49 @@
+name: Karma Agent
+
+on:
+  # Click "Run workflow" in the Actions tab to start manually
+  workflow_dispatch:
+  # Also auto-restarts every 6 hours in case the previous run ended
+  schedule:
+    - cron: '0 */6 * * *'
+
+jobs:
+  run-agent:
+    name: Run Karma Agent
+    runs-on: ubuntu-latest
+    timeout-minutes: 350   # ~5 h 50 min — just under GitHub's 6-hour limit
+
+    defaults:
+      run:
+        working-directory: agent
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: agent/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Build TypeScript
+        run: npm run build
+
+      - name: Run agent
+        env:
+          RPC_URL_PRIMARY:          https://testrpc.xlayer.tech
+          CHAIN_ID:                 "1952"
+          KARMA_HOOK_ADDRESS:       "0x8520437A994BeC0C3b1fE3EbB3F52CF514698080"
+          KARMA_REGISTRY_ADDRESS:   "0x1D13fF25b10C9a6741DFdce229073bed652197c7"
+          AGENT_PRIVATE_KEY:        ${{ secrets.AGENT_PRIVATE_KEY }}
+          POLL_INTERVAL_MS:         "60000"
+          START_BLOCK:              "0"
+          BLOCK_BATCH_SIZE:         "2000"
+          LOG_MODE:                 "json"
+          # No REDIS_URL → uses built-in in-memory store
+        run: node dist/index.js
